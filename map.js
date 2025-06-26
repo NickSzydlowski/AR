@@ -37,6 +37,7 @@ function buildMap (markers) {
  var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
             var myMarker  = L.marker(map.getCenter()).addTo(map);
+            myMarker._icon.classList.add("huechange");
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                  maxZoom: 19,
                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -63,9 +64,6 @@ function buildMap (markers) {
             }
 
             map.on('locationerror', onLocationError);
-
-            var marker = L.marker([37.33556055149797, -121.88534082386907], {alt:'King Library'}).bindPopup('<model-viewer src="assets/purple.glb" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="A 3D model of an astronaut" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>').addTo(map);
-
 
 markers.forEach((element, index, array) => {
       
