@@ -36,7 +36,7 @@ function buildMap (markers) {
     console.log(markers);
  var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
-            var myMarker  = L.marker(map.getCenter()).addTo(map);
+            var myMarker = L.marker(map.getCenter()).addTo(map);
             
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                  maxZoom: 19,
@@ -45,7 +45,7 @@ function buildMap (markers) {
             map.locate({setView: true, watch: true, maxZoom: 16});
             function onLocationFound(e) {
 
-                marker.setLatLng(e.latlng);
+                myMarker.setLatLng(e.latlng);
                 map.setView(marker.getLatLng(),map.getZoom()); 
                 //alert('Marker has been set to position :'+marker.getLatLng().toString());
                 //var radius = e.accuracy;
