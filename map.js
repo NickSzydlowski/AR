@@ -1,7 +1,7 @@
 google.charts.load('current', {
     packages: ['corechart']
       }).then(function () {
-        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1nkYWE6fAV1PGb-YexmtkBOa8NHV4UijWh4e5lM051Q4/gviz/tq?gid=0&headers=1');
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/10-nVF_FYuLg8kvyCRwmaIs1p8ZhH_dMd5XYLHPj2ncY/gviz/tq?gid=0&headers=1');
     query.send(function (response) {
       if (response.isError()) {
         console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
@@ -33,6 +33,7 @@ google.charts.load('current', {
   });
 
 function buildMap (markers) {
+    console.log(markers);
  var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
             var myMarker  = L.marker(map.getCenter()).addTo(map);
@@ -66,4 +67,46 @@ function buildMap (markers) {
             var marker = L.marker([37.33556055149797, -121.88534082386907], {alt:'King Library'}).bindPopup('<model-viewer src="assets/purple.glb" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="A 3D model of an astronaut" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>').addTo(map);
 
 
+markers.forEach((element, index, array) => {
+      
+        //create the marker layer
+        var location = [0,0]
+        if (element.coordinates) {
+          location = element.coordinates.split(',');
+        };
+        //popup HTML
+        var popupBodyText =""
+        if (element.popupBody) {
+          popupBodyText = '<p>'+element.popupBody+'</p>';
         }
+        else {
+          popupBodyText = element.popupBody;
+        };
+        var popupBodyImage = ""
+        if (element.imageURL) {
+          popupBodyImage = '<img src="'+element.imageURL+'">';
+        }
+
+        var popupButton = ""
+        if (element.buttonURL) {
+          popupButton = '<a href="'+element.buttonURL+'"><button>More</button></a>';
+        }
+        var myModel = ""
+        if (element.model) {
+            myModel='<model-viewer src="assets/'+element.model+'" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="'+element.popupHead+'" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>'
+        }
+
+        var myMarker = L.marker(location, {
+            alt:element.popupHead,
+            title:element.popupHead,
+        
+        
+        }).bindPopup('<h3>'+element.popupHead+'</h3>'+ popupBodyText+myModel).addTo(map);
+
+        thisMarker = myMarker;
+    
+        thisMarker.addTo(map);
+      
+    });
+
+}
