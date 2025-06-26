@@ -36,8 +36,7 @@ function buildMap (markers) {
     console.log(markers);
  var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
-            var myMarker  = L.marker(map.getCenter())
-            myMarker.addTo(map);
+            var myMarker  = L.marker(map.getCenter()).addTo(map);
             
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                  maxZoom: 19,
