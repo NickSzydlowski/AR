@@ -1,30 +1,39 @@
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+google.charts.load('current', {
+    packages: ['corechart']
+      }).then(function () {
+        var query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/1nkYWE6fAV1PGb-YexmtkBOa8NHV4UijWh4e5lM051Q4/gviz/tq?gid=0&headers=1');
+    query.send(function (response) {
+      if (response.isError()) {
+        console.log('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+        return;
+      };
+      var dt = response.getDataTable();
+      var markerJsonData = dt.toJSON();
+      markerJsonData = JSON.parse(markerJsonData);
+      markersData = markerJsonData.rows;
+      markersFields = markerJsonData.cols;
+      var rows = [];
+      markersData.forEach((marker, i) =>
+      {
+        var rowObject = {};
+        for (var j=0; j<marker.c.length; j++) {
+            if (marker.c[j]) {
+              rowObject[markersFields[j].label] = marker.c[j].v;
+            }
+            else {
+              rowObject[markersFields[j].label] = "";
+            }
+        };
+        rows.push(rowObject);
+      });
+      markers = rows;
+      buildMap(markers);
+      //resizeToolTips();
+    });
+  });
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<!-- Import the component -->
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-
-    </head>
-    <body>
-        <style>
-            #map { height: 100%; }
-            body {
-                    padding: 0;
-                    margin: 0;
-                }
-                html, body, #map {
-                    height: 100%;
-                    width: 100vw;
-                }
-            .leaflet-popup-content-wrapper {height:200px; width:200px}
-            model-viewer {height:100%; width:100%;}
-        </style>
-         <div id="map"></div>
-        <script>
-            var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
+function buildMap (markers) {
+ var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
             var myMarker  = L.marker(map.getCenter()).addTo(map);
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -36,7 +45,7 @@
 
                 marker.setLatLng(e.latlng);
                 map.setView(marker.getLatLng(),map.getZoom()); 
-                alert('Marker has been set to position :'+marker.getLatLng().toString());
+                //alert('Marker has been set to position :'+marker.getLatLng().toString());
                 //var radius = e.accuracy;
 
                 //myMarker = L.marker(e.latlng).addTo(map)
@@ -57,11 +66,4 @@
             var marker = L.marker([37.33556055149797, -121.88534082386907], {alt:'King Library'}).bindPopup('<model-viewer src="assets/purple.glb" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="A 3D model of an astronaut" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>').addTo(map);
 
 
-
-
-        </script>
-
-
-
-    </body>
-</html>
+        }
