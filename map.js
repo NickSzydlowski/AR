@@ -94,14 +94,13 @@ markers.forEach((element, index, array) => {
             myModel='<model-viewer src="assets/'+element.model+'" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="'+element.popupHead+'" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>'
         }
 
-        var myMarker = L.marker(location, {
+        var thisMarker = L.marker(location, {
             alt:element.popupHead,
             title:element.popupHead,
         
         
         }).bindPopup('<h3>'+element.popupHead+'</h3>'+ popupBodyText+myModel).addTo(map);
-        myMarker._icon.classList.add("huechange");
-        thisMarker = myMarker;
+        thisMarker._icon.classList.add("huechange");
     
         thisMarker.addTo(map);
         
