@@ -36,8 +36,9 @@ function buildMap (markers) {
     console.log(markers);
  var map = L.map('map').setView([37.33556055149797, -121.88534082386907], 16
             );
-            var myMarker  = L.marker(map.getCenter()).addTo(map);
-            myMarker._icon.classList.add("huechange");
+            var myMarker  = L.marker(map.getCenter())
+            myMarker.addTo(map);
+            
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                  maxZoom: 19,
                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -100,11 +101,12 @@ markers.forEach((element, index, array) => {
         
         
         }).bindPopup('<h3>'+element.popupHead+'</h3>'+ popupBodyText+myModel).addTo(map);
-
+        myMarker._icon.classList.add("huechange");
         thisMarker = myMarker;
     
         thisMarker.addTo(map);
-      
+        
+    
     });
 
 }
