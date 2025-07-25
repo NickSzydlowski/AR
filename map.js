@@ -91,7 +91,7 @@ markers.forEach((element, index, array) => {
         }
         var myModel = ""
         if (element.model) {
-            myModel='<model-viewer src="assets/'+element.model+'" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="'+element.popupHead+'" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>'
+            myModel='<model-viewer src="assets/'+element.model+'" autoplay ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="'+element.popupHead+'" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>'
         }
 
         var thisMarker = L.marker(location, {
