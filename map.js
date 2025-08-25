@@ -94,17 +94,27 @@ markers.forEach((element, index, array) => {
             myModel='<model-viewer src="assets/'+element.model+'" ar ar-scale="fixed" camera-controls touch-action="pan-y" alt="'+element.popupHead+'" shadow-intensity="2" max-camera-orbit="auto 90deg auto" xr-environment></model-viewer>'
         }
 
+         var popup = L.popup({
+            pane: 'fixed', // created above
+            className: 'popup-fixed',
+            autoPan: false,
+            maxWidth : 560,
+        }).setContent('<div class = "modal-content"></button><h3>'+element.popupHead+'</h3>'+ popupBodyText+myModel+'</div>');
+
+
         var thisMarker = L.marker(location, {
             alt:element.popupHead,
             title:element.popupHead,
         
         
-        }).bindPopup('<h3>'+element.popupHead+'</h3>'+ popupBodyText+myModel).addTo(map);
+        }).bindPopup(popup).addTo(map);
         thisMarker._icon.classList.add("huechange");
     
         thisMarker.addTo(map);
         
     
     });
+     //fixed pane for popups
+      var pane = map.createPane('fixed', document.getElementById('map'));
 
 }
