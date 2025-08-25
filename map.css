@@ -26,9 +26,9 @@ img.huechange { filter: hue-rotate(120deg); }
 }
 
 .modal-content {
-    max-width: 500px;
+    /*max-width: 500px;
     min-width: 400px;
-    width: 80%;
+    width: 80%;*/
     margin:auto;
     box-shadow:none;
     border:none;
